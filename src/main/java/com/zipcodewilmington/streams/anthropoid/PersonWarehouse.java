@@ -35,7 +35,8 @@ public final class PersonWarehouse {
      * @return list of uniquely named Person objects
      */ //TODO
     public static Stream<Person> getUniquelyNamedPeople() {
-        return null;
+       return PersonWarehouse.people.stream();
+
     }
 
 
