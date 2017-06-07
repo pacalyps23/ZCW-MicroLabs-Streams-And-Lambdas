@@ -5,6 +5,7 @@ import com.zipcodewilmington.streams.anthropoid.PersonFactory;
 import com.zipcodewilmington.streams.tools.RandomUtils;
 import com.zipcodewilmington.streams.tools.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,24 +20,27 @@ public class StreamFilter {
     /**
      * No arg constructor
      */ //TODO - construct person stream of 100 person objects; startingCharacter is a random capital letter
-    public StreamFilter() {
-        this(Stream.empty(), null);
+    public StreamFilter()
+    {
+        this(PersonFactory.createPersonStream(100),RandomUtils.createCharacter('A', 'Z') );
     }
 
     /**
      * @param people - Array of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(Person[] people, Character startingCharacter) {
-        this(Stream.empty(), null);
+    public StreamFilter(Person[] people, Character startingCharacter)
+    {
+        this(Arrays.stream(people), startingCharacter);
     }
 
     /**
      * @param people - List of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(List<Person> people, Character startingCharacter) {
-        this(Stream.empty(), null);
+    public StreamFilter(List<Person> people, Character startingCharacter)
+    {
+        this(people.stream(), startingCharacter);
     }
 
 
@@ -44,7 +48,8 @@ public class StreamFilter {
      * @param people - Stream of person objects
      * @param startingCharacter - character to filter by
      */ // I took care of the easy constructor (͡° ͜ʖ ͡°)
-    public StreamFilter(Stream<Person> people, Character startingCharacter) {
+    public StreamFilter(Stream<Person> people, Character startingCharacter)
+    {
         this.personStream = people;
         this.startingCharacter = startingCharacter.toString();
     }
@@ -54,8 +59,12 @@ public class StreamFilter {
      * Using multi-line lambda syntax
      * @return a list of person object whose name starts with `this.startingCharacter`
      */ //TODO
-    public List<Person> toListMultiLine() {
-        return null;
+    public List<Person> toListMultiLine()
+    {
+         return personStream.filter(person ->
+         {
+             return person.getName().startsWith(this.startingCharacter);
+         }).collect(Collectors.toList());
     }
 
 
@@ -63,8 +72,10 @@ public class StreamFilter {
      * Using one-line lambda syntax
      * @return a list of person objects whose name starts with `this.startingCharacter`
      */ //TODO
-    public List<Person> toListOneLine() {
-        return null;
+    public List<Person> toListOneLine()
+    {
+        return personStream.filter(person -> person.getName().startsWith(this.startingCharacter))
+                .collect(Collectors.toList());
     }
 
 
@@ -72,8 +83,10 @@ public class StreamFilter {
      * Using one-line lambda syntax
      * @return an array of person object whose name starts with `this.startingCharacter`
      */ //TODO
-    public Person[] toArrayOneLine() {
-        return null;
+    public Person[] toArrayOneLine()
+    {
+        return personStream.filter(person -> person.getName().startsWith(this.startingCharacter))
+                .toArray(Person[]::new);
     }
 
 
@@ -81,8 +94,12 @@ public class StreamFilter {
      * Using multi-line lambda syntax
      * @return an array of person object whose name starts with `this.startingCharacter`
      */ //TODO
-    public Person[] toArrayMultiLine() {
-        return null;
+    public Person[] toArrayMultiLine()
+    {
+        return personStream.filter(person ->
+        {
+            return person.getName().startsWith(this.startingCharacter);
+        }).toArray(Person[]::new);
     }
 
 }
